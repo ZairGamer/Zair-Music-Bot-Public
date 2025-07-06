@@ -33,7 +33,7 @@ Un bot de música para Discord con muchas funciones, construido con Discord.js, 
 | `!help` / `/help`                 | Mostrar este mensaje de ayuda                  | `!help`                          |
 | `!comment <texto>` / `/comment`   | Agregar un comentario a la pista actual        | `!comment Me gusta esta canción` |
 | `!comments` / `/comments`         | Mostrar comentarios de la pista actual         | `!comments`                      |
-| `!goto <mm:ss>` / `/goto`         | Ir a un tiempo específico de la pista actual   | `!goto 1:30`                     |
+| `!goto <mm ss>` / `/goto`         | Ir a un tiempo específico de la pista actual   | `!goto 1 30`                     |
 | `!setchannel` / `/setchannel`     | Establecer el canal actual como permitido      | `!setchannel`                    |
 | `!clearchannel` / `/clearchannel` | Quitar restricción de canal para comandos      | `!clearchannel`                  |
 
