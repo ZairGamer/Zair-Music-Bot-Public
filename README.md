@@ -15,22 +15,27 @@ Un bot de música para Discord con muchas funciones, construido con Discord.js, 
 
 ## Comandos
 
-| Comando              | Descripción                                    | Uso                             |
-| -------------------- | ---------------------------------------------- | ------------------------------- |
-| `!play <query>`      | Reproducir una canción o lista de reproducción | `!play Never Gonna Give You Up` |
-| `!pause`             | Pausar la pista actual                         | `!pause`                        |
-| `!resume`            | Reanudar la pista actual                       | `!resume`                       |
-| `!skip`              | Saltar la pista actual                         | `!skip`                         |
-| `!stop`              | Detener la reproducción y limpiar la cola      | `!stop`                         |
-| `!queue`             | Mostrar la cola actual                         | `!queue`                        |
-| `!nowplaying`        | Mostrar información de la pista actual         | `!nowplaying`                   |
-| `!volume <0-100>`    | Ajustar el volumen del reproductor             | `!volume 50`                    |
-| `!shuffle`           | Mezclar la cola actual                         | `!shuffle`                      |
-| `!loop`              | Alternar modo de repetición de la cola         | `!loop`                         |
-| `!remove <posición>` | Remover una pista de la cola                   | `!remove 1`                     |
-| `!clear`             | Limpiar la cola actual                         | `!clear`                        |
-| `!status`            | Mostrar estado del reproductor                 | `!status`                       |
-| `!help`              | Mostrar este mensaje de ayuda                  | `!help`                         |
+| Comando                           | Descripción                                    | Uso                              |
+| --------------------------------- | ---------------------------------------------- | -------------------------------- |
+| `!play <query>` / `/play`         | Reproducir una canción o lista de reproducción | `!play Never Gonna Give You Up`  |
+| `!pause` / `/pause`               | Pausar la pista actual                         | `!pause`                         |
+| `!resume` / `/resume`             | Reanudar la pista actual                       | `!resume`                        |
+| `!skip` / `/skip`                 | Saltar la pista actual                         | `!skip`                          |
+| `!stop` / `/stop`                 | Detener la reproducción y limpiar la cola      | `!stop`                          |
+| `!queue` / `/queue`               | Mostrar la cola actual                         | `!queue`                         |
+| `!nowplaying` / `/nowplaying`     | Mostrar información de la pista actual         | `!nowplaying`                    |
+| `!volume <0-100>` / `/volume`     | Ajustar el volumen del reproductor             | `!volume 50`                     |
+| `!shuffle` / `/shuffle`           | Mezclar la cola actual                         | `!shuffle`                       |
+| `!loop` / `/loop`                 | Alternar modo de repetición de la cola         | `!loop`                          |
+| `!remove <posición>` / `/remove`  | Remover una pista de la cola                   | `!remove 1`                      |
+| `!clear` / `/clear`               | Limpiar la cola actual                         | `!clear`                         |
+| `!status` / `/status`             | Mostrar estado del reproductor                 | `!status`                        |
+| `!help` / `/help`                 | Mostrar este mensaje de ayuda                  | `!help`                          |
+| `!comment <texto>` / `/comment`   | Agregar un comentario a la pista actual        | `!comment Me gusta esta canción` |
+| `!comments` / `/comments`         | Mostrar comentarios de la pista actual         | `!comments`                      |
+| `!goto <mm:ss>` / `/goto`         | Ir a un tiempo específico de la pista actual   | `!goto 1:30`                     |
+| `!setchannel` / `/setchannel`     | Establecer el canal actual como permitido      | `!setchannel`                    |
+| `!clearchannel` / `/clearchannel` | Quitar restricción de canal para comandos      | `!clearchannel`                  |
 
 ## Requisitos previos
 
