@@ -76,11 +76,7 @@ const slashCommands = commands.map(cmd => {
     if (cmd.name === 'volume') builder.addIntegerOption(opt => opt.setName('level').setDescription('0-100').setRequired(true));
     if (cmd.name === 'remove') builder.addIntegerOption(opt => opt.setName('position').setDescription('Track position in queue').setRequired(true));
     if (cmd.name === 'comment') builder.addStringOption(opt => opt.setName('text').setDescription('Comentario para la canción').setRequired(true).setMaxLength(50));
-    if (cmd.name === 'goto') {
-        builder.addIntegerOption(opt => opt.setName('hora').setDescription('Hora (opcional)').setRequired(false))
-               .addIntegerOption(opt => opt.setName('minuto').setDescription('Minuto (opcional)').setRequired(false))
-               .addIntegerOption(opt => opt.setName('segundo').setDescription('Segundo').setRequired(true));
-    }
+    if (cmd.name === 'goto') builder.addIntegerOption(o => o.setName('segundo').setDescription('Segundo al que saltar').setRequired(true)).addIntegerOption(o => o.setName('minuto').setDescription('Minuto (opcional)').setRequired(false)).addIntegerOption(o => o.setName('hora').setDescription('Hora (opcional)').setRequired(false));
     return builder;
 });
 
@@ -538,22 +534,38 @@ async function handleCommand(command, args, context) {
                 break;
             }
             case 'goto': {
-                const args = message.content.split(' ').slice(1);
-                const targetMs = parseTimeArgs(args);
+                let targetMs;
 
-                if (targetMs === null) {
-                    return messages.error(message.channel, '❌ Formato inválido. Usa `!goto [segundos]`, `!goto [minutos] [segundos]` o `!goto [horas] [minutos] [segundos]`');
+                if (message) {
+                    const args = message.content.split(' ').slice(1);
+                    targetMs = parseTimeArgs(args);
+                } else {
+                    const hora = interaction.options.getInteger('hora') || 0;
+                    const minuto = interaction.options.getInteger('minuto') || 0;
+                    const segundo = interaction.options.getInteger('segundo');
+
+                    if (segundo === null || isNaN(segundo)) {
+                        return interaction.reply({ content: '❌ Debes especificar al menos los segundos.', ephemeral: true });
+                    }
+
+                    targetMs = (hora * 3600 + minuto * 60 + segundo) * 1000;
                 }
 
-                const player = client.riffy.players.get(message.guild.id);
+                const guildId = message ? message.guild.id : interaction.guild.id;
+                const channel = message ? message.channel : interaction.channel;
+                const player = client.riffy.players.get(guildId);
                 const track = player?.queue?.current;
-                
+
                 if (!player || !track) {
-                    return messages.error(message.channel, '❌ No hay ninguna canción en reproducción.');
+                    const content = '❌ No hay ninguna canción en reproducción.';
+                    if (message) return messages.error(channel, content);
+                    else return interaction.reply({ content, ephemeral: true });
                 }
 
                 if (targetMs >= track.info.duration) {
-                    return messages.error(message.channel, `❌ El tiempo excede la duración de la canción (${getDurationString(track)}).`);
+                    const content = `❌ El tiempo excede la duración de la canción (${getDurationString(track)}).`;
+                    if (message) return messages.error(channel, content);
+                    else return interaction.reply({ content, ephemeral: true });
                 }
 
                 player.seek(targetMs);
@@ -573,7 +585,10 @@ async function handleCommand(command, args, context) {
                     warning = "\n⚠️ Advertencia: El comando `goto` puede ser poco fiable con algunas canciones debido a limitaciones técnicas.";
                 }
 
-                return messages.success(message.channel, `⏩ Reproducción movida a **${formatted}**.` + warning);
+                const response = `⏩ Reproducción movida a **${formatted}**.` + warning;
+
+                if (message) return messages.success(channel, response);
+                else return interaction.reply({ content: response, ephemeral: true });
             }
             case "status": {
                 const guildId = message ? message.guild.id : interaction.guild.id;
